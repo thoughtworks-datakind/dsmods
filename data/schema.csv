@@ -1,0 +1,3 @@
+attribute,column_int,column_float,column_text,column_date_time
+type,integer,number,string,string
+format,default,default,default,default
