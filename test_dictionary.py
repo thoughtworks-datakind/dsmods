@@ -1,21 +1,16 @@
 import os
-import unittest
 import json
+import unittest
 import dictionary
-import pandas as pd
+from collections import OrderedDict
 
 class TestDictionary(unittest.TestCase):
 
     def test_infer(self):
-        actual = dictionary.infer(os.getcwd() + "/data/sample.csv")
-        actual_json = json.dumps(actual, default=lambda x: x.__dict__)
+        actual_json = json.dumps(dictionary.infer(os.getcwd() + "/data/sample.csv"), default=lambda x: x.__dict__)
 
-        expected_json = ('['
-        '{"type": "integer", "name": "column_int", "format": "default"}, '
-        '{"type": "number", "name": "column_float", "format": "default"}, '
-        '{"type": "string", "name": "column_text", "format": "default"}, '
-        '{"type": "date", "name": "column_date_time", "format": "default"}'
-        ']')
+        with open('./schema.json') as f:
+            expected_json = json.dumps(json.load(f, object_pairs_hook=OrderedDict))
         
         self.assertEquals(expected_json, actual_json)
 
