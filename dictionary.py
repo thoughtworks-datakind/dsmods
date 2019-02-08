@@ -34,6 +34,8 @@ def infer(path, limit = 2000):
         
         metadata.missing_count = data[field.name].isnull().sum()
         metadata.missing_percentage =  round(float(metadata.missing_count)/num_rows  * 100 , 2)
+        metadata.distinct_values = data[field.name].nunique()
+        metadata.top = data[field.name].value_counts().idxmax()
 
         metadata_array.append(metadata)
 
@@ -46,3 +48,5 @@ class Metadata:
     format = ""
     missing_count = 0
     missing_percentage = 0.0
+    distinct_values = 0
+    top = object()
