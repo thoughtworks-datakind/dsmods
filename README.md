@@ -1,2 +1,2 @@
 # dsmods
-A library that encompasses different modules for various activities in data science
+A collection of modules for various activities in data science
