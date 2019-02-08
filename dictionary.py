@@ -25,17 +25,19 @@ def infer(path, limit = 2000):
     metadata_array = []
     for field in table.schema.fields: 
         metadata = Metadata()
+        
         metadata.name = field.name
         metadata.type = field.type 
         metadata.format = field.format
 
-        if field.type == "string" and rows_to_scan == data[field.name].head(rows_to_scan).apply(lambda x :is_date(x)).sum() :
-            metadata.type = "date"
-        
         metadata.missing_count = data[field.name].isnull().sum()
         metadata.missing_percentage =  round(float(metadata.missing_count)/num_rows  * 100 , 2)
-        metadata.distinct_values = data[field.name].nunique()
-        metadata.top = data[field.name].value_counts().idxmax()
+        metadata.distinct_count = data[field.name].nunique()
+        metadata.most_frequent = data[field.name].value_counts().idxmax()
+
+        if metadata.type == "string" and metadata.missing_percentage != 100.0:
+            if rows_to_scan == data[field.name].head(rows_to_scan).apply(lambda x :is_date(x)).sum():
+                metadata.type = "date"
 
         metadata_array.append(metadata)
 
@@ -48,5 +50,5 @@ class Metadata:
     format = ""
     missing_count = 0
     missing_percentage = 0.0
-    distinct_values = 0
-    top = object()
+    distinct_count = 0
+    most_frequent = object()

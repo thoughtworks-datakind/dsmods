@@ -3,36 +3,36 @@
         "name": "column_int",
         "format": "default",
         "missing_count": 1,
-        "top": 10.0,
+        "distinct_count": 10,
         "missing_percentage": 9.09,
-        "type": "integer",
-        "distinct_values": 10
+        "most_frequent": 10.0,
+        "type": "integer"
     },
     {
         "name": "column_float",
         "format": "default",
         "missing_count": 1,
-        "top": 5.05,
+        "distinct_count": 10,
         "missing_percentage": 9.09,
-        "type": "number",
-        "distinct_values": 10
+        "most_frequent": 5.05,
+        "type": "number"
     },
     {
         "name": "column_text",
         "format": "default",
         "missing_count": 1,
-        "top": "sample text2",
+        "distinct_count": 2,
         "missing_percentage": 9.09,
-        "type": "string",
-        "distinct_values": 2
+        "most_frequent": "sample text2",
+        "type": "string"
     },
     {
         "name": "column_date_time",
         "format": "default",
         "missing_count": 1,
-        "top": "8/2/2019 18:30",
+        "distinct_count": 10,
         "missing_percentage": 9.09,
-        "type": "string",
-        "distinct_values": 10
+        "most_frequent": "8/2/2019 18:30",
+        "type": "string"
     }
 ]
