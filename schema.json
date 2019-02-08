@@ -1,0 +1,1 @@
+[{"type": "integer", "name": "column_int", "format": "default"}, {"type": "number", "name": "column_float", "format": "default"}, {"type": "string", "name": "column_text", "format": "default"}, {"type": "date", "name": "column_date_time", "format": "default"}]

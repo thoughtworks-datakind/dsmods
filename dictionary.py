@@ -1,25 +1,40 @@
-import json
-import numpy as np
 import pandas as pd
 from tableschema import Table
 from dateutil.parser import parse
 
+def is_date(string):
+    if str(string) == "":
+        return True
+    try: 
+        parse(string)
+        return True
+    except ValueError:
+        return False
+    except TypeError:
+        return False
+
 def infer(path, limit = 2000):
     table = Table(path)
     table.infer(limit=limit, confidence=0.75)
-    return convert_to_df(table.schema)
 
-def convert_to_df(schema):
-    names = ["name"]
-    types = ["type"]
-    formats = ["format"]
+    data = pd.read_csv(path, low_memory=False)
+    rows_to_scan = limit if limit < data.index._stop else data.index._stop
 
-    for field in schema.fields: 
-        names.append(field.name)
-        types.append(field.type)
-        formats.append(field.format)
+    metadata_array = []
+    for field in table.schema.fields: 
+        metadata = Metadata()
+        metadata.name = field.name
+        metadata.type = field.type 
+        metadata.format = field.format
 
-    data = np.array([names, types, formats])
-    df = pd.DataFrame(data=data[1:,1:], index=data[1:,0], columns=data[0,1:])
-    df.index.name = "attribute"
-    return df
+        if field.type == "string" and rows_to_scan == data[field.name].head(rows_to_scan).apply(lambda x :is_date(x)).sum() :
+            metadata.type = "date"
+        metadata_array.append(metadata)
+
+    return metadata_array
+
+class Metadata:
+
+    name = ""
+    type = ""
+    format = ""
