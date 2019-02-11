@@ -7,7 +7,7 @@ from collections import OrderedDict
 class TestDictionary(unittest.TestCase):
 
     def test_infer(self):
-        actual_json = json.dumps(dictionary.infer(os.getcwd() + "/data/sample.csv"), default=lambda x: x.__dict__)
+        actual_json = json.dumps(dictionary.infer(os.getcwd() + "/data/sample.csv"), default=lambda x: x.__dict__, sort_keys=True)
 
         with open('./schema.json') as f:
             expected_json = json.dumps(json.load(f, object_pairs_hook=OrderedDict))

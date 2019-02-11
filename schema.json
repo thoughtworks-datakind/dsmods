@@ -1,38 +1,42 @@
 [
     {
-        "name": "column_int",
+        "distinct_count": 10,
+        "distinct_percentage": 100.0,
         "format": "default",
         "missing_count": 1,
-        "distinct_count": 10,
         "missing_percentage": 9.09,
         "most_frequent": 10.0,
+        "name": "column_int",
         "type": "integer"
     },
     {
-        "name": "column_float",
+        "distinct_count": 10,
+        "distinct_percentage": 100.0,
         "format": "default",
         "missing_count": 1,
-        "distinct_count": 10,
         "missing_percentage": 9.09,
         "most_frequent": 5.05,
+        "name": "column_float",
         "type": "number"
     },
     {
-        "name": "column_text",
+        "distinct_count": 2,
+        "distinct_percentage": 20.0,
         "format": "default",
         "missing_count": 1,
-        "distinct_count": 2,
         "missing_percentage": 9.09,
         "most_frequent": "sample text2",
+        "name": "column_text",
         "type": "string"
     },
     {
-        "name": "column_date_time",
+        "distinct_count": 10,
+        "distinct_percentage": 100.0,
         "format": "default",
         "missing_count": 1,
-        "distinct_count": 10,
         "missing_percentage": 9.09,
         "most_frequent": "8/2/2019 18:30",
+        "name": "column_date_time",
         "type": "string"
     }
 ]
