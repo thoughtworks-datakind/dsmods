@@ -30,20 +30,27 @@ def infer(path, limit = 2000):
         metadata.type = field.type 
         metadata.format = field.format
 
-        missing_count = data[field.name].isnull().sum()
+        object_description = data[field.name].astype(object).describe()
+        
+        missing_count = num_rows - int(object_description['count'])
         metadata.missing_count = missing_count
         metadata.missing_percentage =  round(float(missing_count)/num_rows  * 100 , 2)
 
-        distinct_count = data[field.name].nunique()
+        distinct_count = int(object_description['unique'])
         metadata.distinct_count = distinct_count
         metadata.distinct_percentage = round(float(distinct_count) / (num_rows - missing_count) * 100, 2)
         
-        metadata.most_frequent = data[field.name].value_counts().idxmax()
+        metadata.most_frequent = object_description['top']
 
         if metadata.type == "string" and metadata.missing_percentage != 100.0:
             if rows_to_scan == data[field.name].head(rows_to_scan).apply(lambda x :is_date(x)).sum():
                 metadata.type = "date"
-
+        
+        if metadata.type ==  "integer" or metadata.type == "number" :
+            numeric_description = data[field.name].describe()
+            metadata.min = numeric_description['min']
+            metadata.max = numeric_description['max']
+        
         metadata_array.append(metadata)
 
     return metadata_array
@@ -58,3 +65,5 @@ class Metadata:
     distinct_count = 0
     distinct_percentage = 0.0
     most_frequent = object()
+    min = 0.0
+    max = 0.0
