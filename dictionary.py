@@ -2,11 +2,11 @@ import pandas as pd
 from tableschema import Table
 from dateutil.parser import parse
 
-def is_date(string):
-    if str(string) == "":
+def is_date(input):
+    if str(input) == "" or str(input).lower() == "nan":
         return True
-    try: 
-        parse(string)
+    try:
+        parse(input)
         return True
     except ValueError:
         return False
@@ -43,14 +43,20 @@ def infer(path, limit = 2000):
         metadata.most_frequent = object_description['top']
 
         if metadata.type == "string" and metadata.missing_percentage != 100.0:
-            if rows_to_scan == data[field.name].head(rows_to_scan).apply(lambda x :is_date(x)).sum():
+            if rows_to_scan == data[metadata.name].head(rows_to_scan).apply(lambda x :is_date(x)).sum():
                 metadata.type = "date"
         
-        if metadata.type ==  "integer" or metadata.type == "number" :
+        if (metadata.type ==  "integer" or metadata.type == "number") and (data.dtypes[field.name] == "int64" or data.dtypes[field.name] == "float64") :
             numeric_description = data[field.name].describe()
             metadata.min = numeric_description['min']
             metadata.max = numeric_description['max']
         
+        metadata.ml_type = metadata.type
+        if metadata.type ==  "integer" or metadata.type == "number" :
+            metadata.ml_type = "numeric"
+        if metadata.type == "string" :
+            metadata.ml_type = "open_text"
+
         metadata_array.append(metadata)
 
     return metadata_array
@@ -67,3 +73,4 @@ class Metadata:
     most_frequent = object()
     min = 0.0
     max = 0.0
+    ml_type = ""

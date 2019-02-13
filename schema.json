@@ -7,6 +7,7 @@
         "min": 1.0,
         "missing_count": 1,
         "missing_percentage": 9.09,
+        "ml_type": "numeric",
         "most_frequent": 10.0,
         "name": "column_int",
         "type": "integer"
@@ -19,6 +20,7 @@
         "min": 1.05,
         "missing_count": 1,
         "missing_percentage": 9.09,
+        "ml_type": "numeric",
         "most_frequent": 6.05,
         "name": "column_float",
         "type": "number"
@@ -29,6 +31,7 @@
         "format": "default",
         "missing_count": 1,
         "missing_percentage": 9.09,
+        "ml_type": "open_text",
         "most_frequent": "sample text2",
         "name": "column_text",
         "type": "string"
@@ -39,8 +42,9 @@
         "format": "default",
         "missing_count": 1,
         "missing_percentage": 9.09,
+        "ml_type": "date",
         "most_frequent": "8/2/2019 18:30",
         "name": "column_date_time",
-        "type": "string"
+        "type": "date"
     }
 ]
